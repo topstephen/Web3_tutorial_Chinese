@@ -6,7 +6,7 @@ async function main() {
     const localSimulatorFactory = await ethers.getContractFactory("CCIPLocalSimulator")
     const localSimulator = await localSimulatorFactory.deploy();
 
-    const config = await localSimulator.DOCUMENTATION();
+    const config = await localSimulator.configuration();
     const { 
         chainSelector_,
         sourceRouter_,
@@ -27,7 +27,7 @@ async function main() {
 
     // deploy nft contract
     const nftFactory = await ethers.getContractFactory("MyToken")
-    const nft = await nftFactory.deploy(deployer);
+    const nft = await nftFactory.deploy("MyToken","MT");
     await nft.waitForDeployment()
     console.log(`NFT is deployed at address ${nft.target}`)
 
@@ -38,8 +38,8 @@ async function main() {
     console.log(`LockAndReleasePool was deployed at address ${nftLockAndReleasePool.target}`)
 
     // deploy the WrappedNFT 
-    const wrappedNftFactory = await ethers.getContractFactory("WrappedMyToken")
-    const wrappedNft = await wrappedNftFactory.deploy(deployer)
+    const wrappedNftFactory = await ethers.getContractFactory("WrappedNFT")
+    const wrappedNft = await wrappedNftFactory.deploy("WMyToken","WMT");
     await wrappedNft.waitForDeployment()
     console.log(`WrappedNFT was deployed at address ${wrappedNft.target}`)
 
@@ -69,7 +69,7 @@ async function main() {
     console.log("approve successfully")
     
     // send nft to from LockAndRelease to BurnAndMint
-    await nftLockAndReleasePool.lockAndCrossChainNft(
+    await nftLockAndReleasePool.lockAndSendNFT(
         0, //tokenId
         deployer,  //newOwner
         chainSelector_, //router

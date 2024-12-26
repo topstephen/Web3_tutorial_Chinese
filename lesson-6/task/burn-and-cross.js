@@ -30,6 +30,7 @@ task("burn-and-cross")
         if(taskArgs.chainselector) {
             chainSelector = taskArgs.chainselector
         } else {
+                //此处的ChainSelector为目标链的
             chainSelector = networkConfig[network.config.chainId].companionChainSelector
         }
 

@@ -6,9 +6,9 @@ require("hardhat-deploy-ethers");
 require("./task")
 
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY
-const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL
-const AMOY_RPC_URL = process.env.AMOY_RPC_URL
+const PRIVATE_KEY = process.env.PRIVE_KEY
+const SEPOLIA_RPC_URL = process.env.SEPOLIA_URL
+const HOLESKY_RPC_URL = process.env.HOLESKY_URL
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -34,13 +34,13 @@ module.exports = {
       chainId: 11155111,
       blockConfirmations: 6,
       companionNetworks: {
-        destChain: "amoy"
+        destChain: "holesky"
       }
     },
-    amoy: {
-      url: AMOY_RPC_URL,
+    holesky: {
+      url: HOLESKY_RPC_URL,
       accounts: [PRIVATE_KEY],
-      chainId: 80002,
+      chainId: 17000,
       blockConfirmations: 6,
       companionNetworks: {
         destChain: "sepolia"
