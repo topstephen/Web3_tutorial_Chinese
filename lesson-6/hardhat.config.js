@@ -8,7 +8,7 @@ require("./task")
 
 const PRIVATE_KEY = process.env.PRIVE_KEY
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_URL
-const HOLESKY_RPC_URL = process.env.HOLESKY_URL
+const AMOY_RPC_URL = process.env.AMOY_URL
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -38,7 +38,7 @@ module.exports = {
       }
     },
     amoy: {
-      url: HOLESKY_RPC_URL,
+      url: AMOY_RPC_URL,
       accounts: [PRIVATE_KEY],
       chainId: 80002,
       blockConfirmations: 6,
