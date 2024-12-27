@@ -8,7 +8,7 @@ import {CCIPReceiver} from "@chainlink/contracts-ccip/src/v0.8/ccip/applications
 import {IERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol";
 import {WrappedNFT} from "./WrappedNFT.sol";
-import "hardhat/console.sol";
+
 /**
  * THIS IS AN EXAMPLE CONTRACT THAT USES HARDCODED VALUES FOR CLARITY.
  * THIS IS AN EXAMPLE CONTRACT THAT USES UN-AUDITED CODE.
@@ -63,18 +63,11 @@ contract NFTPoolBurnAndMint is CCIPReceiver, OwnerIsCreator {
 
     WrappedNFT public wnft;
 
-
-    //Link 0x685cE6742351ae9b618F383883D6d1e0c5A31B4B
-    //Router 0xb9531b46fE8808fB3659e39704953c2B1112DD43
-
-
-    //receiver 在sepolia的地址
-// 0xa613CE3d897927116f38c98A343866ADcCD03E10
-// destinationChainSelector  16015286601757825753
     /// @notice Constructor initializes the contract with the router address.
     /// @param _router The address of the router contract.
     /// @param _link The address of the link contract.
-    constructor(address _router, address _link) CCIPReceiver(_router) {
+    constructor(address _router, address _link, address wnftAddr) CCIPReceiver(_router) {
+        wnft = WrappedNFT(wnftAddr);
         s_linkToken = IERC20(_link);
     }
 
@@ -267,61 +260,5 @@ contract NFTPoolBurnAndMint is CCIPReceiver, OwnerIsCreator {
         if (amount == 0) revert NothingToWithdraw();
 
         IERC20(_token).safeTransfer(_beneficiary, amount);
-    }
-
-
-    function sendMessagePayNative(
-        uint64 _destinationChainSelector,
-        address _receiver,
-        string calldata _strText
-    ) external onlyOwner returns (bytes32 messageId) {
-        console.log("Entering sendMessagePayNative...");
-
-        bytes memory _text = abi.encode(_strText);
-        // console.log("Encoded text:", _text);
-
-        // 创建 EVM2AnyMessage 结构体
-        Client.EVM2AnyMessage memory evm2AnyMessage = _buildCCIPMessage(
-            _receiver,
-            _text,
-            address(0)
-        );
-        console.log("EVM2AnyMessage created");
-
-        // 初始化路由器客户端实例
-        IRouterClient router = IRouterClient(this.getRouter());
-        console.log("Router client initialized");
-
-        // 获取发送 CCIP 消息所需的费用
-        console.log("Getting fee...");
-        uint256 fees = router.getFee(_destinationChainSelector, evm2AnyMessage);
-        console.log("Fees required:", fees);
-
-        // 检查合约余额是否足够支付费用
-        if (fees > address(this).balance) {
-            console.log("Insufficient balance:", address(this).balance, "required:", fees);
-            revert NotEnoughBalance(address(this).balance, fees);
-        }
-
-        // 发送 CCIP 消息并通过路由器并存储返回的 CCIP 消息 ID
-        console.log("Sending message...");
-        messageId = router.ccipSend{value: fees}(
-            _destinationChainSelector,
-            evm2AnyMessage
-        );
-        console.log("Message sent with ID:");
-
-        // 触发事件记录消息详情
-        emit TokenBurnedAndSent(
-            messageId,
-            _destinationChainSelector,
-            _receiver,
-            _text,
-            address(0),
-            fees
-        );
-
-        // 返回 CCIP 消息 ID
-        return messageId;
     }
 }

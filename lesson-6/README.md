@@ -34,9 +34,9 @@ SEPOLIA_RPC_URL
 AMOY_RPC_URL
 ```
 
-6. 在 source chain 部署合约：`npx hardhat deploy --tags sourcechain --network sepolia`，如果你在上一步使用的不是 sepolia 和 holesky，那么请相应调整 network 名字
+6. 在 source chain 部署合约：`npx hardhat deploy --tags sourcechain --network sepolia`，如果你在上一步使用的不是 sepolia 和 amoy，那么请相应调整 network 名字
 
-7. 在 dest chain 部署合约：`npx hardhat deploy --tags destchain --network holesky` 如果你在上一步使用的不是 sepolia 和 holesky，那么请相应调整 network 名字
+7. 在 dest chain 部署合约：`npx hardhat deploy --tags destchain --network amoy` 如果你在上一步使用的不是 sepolia 和 amoy，那么请相应调整 network 名字
 
 8. 铸造 nft：`npx hardhat mint-nft --network sepolia`
 
@@ -44,9 +44,9 @@ AMOY_RPC_URL
 
 10. 锁定并且跨链 nft：`npx hardhat lock-and-cross --tokenid 0 --network sepolia`
 
-11. 查看 wrapped NFT 状态：`npx hardhat check-wrapped-nft --tokenid 0 --network holesky`
+11. 查看 wrapped NFT 状态：`npx hardhat check-wrapped-nft --tokenid 0 --network amoy`
 
-12. 燃烧并且跨链 wnft：`npx hardhat burn-and-cross --tokenid 0 --network holesky`
+12. 燃烧并且跨链 wnft：`npx hardhat burn-and-cross --tokenid 0 --network amoy`
 
 13. 再次查看 nft 状态：`npx hardhat check-nft --network sepolia`
 
@@ -90,7 +90,7 @@ AMOY_RPC_URL
 
 6. Deploy contracts on the source chain: `npx hardhat deploy --tags sourcechain --network sepolia`. If you did not use sepolia and Amoy in the previous step, adjust the network name accordingly.
 
-7. Deploy contracts on the dest chain: `npx hardhat deploy --tags destchain --network holesky`. If you did not use sepolia and Amoy in the previous step, adjust the network name accordingly.
+7. Deploy contracts on the dest chain: `npx hardhat deploy --tags destchain --network amoy`. If you did not use sepolia and Amoy in the previous step, adjust the network name accordingly.
 
 8. Mint nft: `npx hardhat mint-nft --network sepolia`
 
@@ -98,9 +98,9 @@ AMOY_RPC_URL
 
 10. Lock and cross nft: `npx hardhat lock-and-cross --tokenid 0 --network sepolia`
 
-11. Check wrapped NFT status: `npx hardhat check-wrapped-nft --tokenid 0 --network holesky`
+11. Check wrapped NFT status: `npx hardhat check-wrapped-nft --tokenid 0 --network amoy`
 
-12. Burn and cross wnft: `npx hardhat burn-and-cross --tokenid 0 --network holesky`
+12. Burn and cross wnft: `npx hardhat burn-and-cross --tokenid 0 --network amoy`
 
 13. Check nft status again：`npx hardhat check-nft --network sepolia`
 

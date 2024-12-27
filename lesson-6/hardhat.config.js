@@ -34,13 +34,13 @@ module.exports = {
       chainId: 11155111,
       blockConfirmations: 6,
       companionNetworks: {
-        destChain: "holesky"
+        destChain: "amoy"
       }
     },
-    holesky: {
+    amoy: {
       url: HOLESKY_RPC_URL,
       accounts: [PRIVATE_KEY],
-      chainId: 17000,
+      chainId: 80002,
       blockConfirmations: 6,
       companionNetworks: {
         destChain: "sepolia"
